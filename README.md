@@ -40,7 +40,6 @@ https://mia-events.netlify.app
 - Warn user before deleting or leaving an unsaved modal
 - Form validations + warnings ie: empty field
 
-
 ## Video / Screenshots
 
 TBD

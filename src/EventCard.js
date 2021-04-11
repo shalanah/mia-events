@@ -20,14 +20,10 @@ const Container = styled.button`
   }
   img {
     transition: 0.2s;
-    filter: url("#filter");
   }
   :hover {
     transform: scale(1.02);
     box-shadow: 1px 2px 30px rgba(0, 0, 0, 0.2);
-    img {
-      filter: none;
-    }
   }
 `;
 
