@@ -49,6 +49,13 @@ const TimeContainer = styled.div`
     width: 6px;
     height: 1.25rem;
   }
+  @media screen and (max-width: 700px) {
+    width: 100%;
+    text-align: center;
+    .tick {
+      display: none;
+    }
+  }
 `;
 
 const EventsContainer = styled.div`
@@ -97,7 +104,8 @@ const Main = styled.main`
   align-items: flex-start;
   padding-top: 2rem;
   gap: 20px;
-  @media screen and (max-width: 1000px) {
+  @media screen and (max-width: 700px) {
+    padding-top: 1rem;
     flex-direction: column;
   }
 `;

@@ -70,7 +70,7 @@ const GlobalCss = createGlobalStyle`
     background: none;
   }
   .desktop-only {
-    @media screen and (max-width: 1000px) {
+    @media screen and (max-width: 700px) {
       display: none;
     }
   }
