@@ -102,6 +102,14 @@ const Main = styled.main`
   }
 `;
 
+const H1 = styled.h1`
+  font-size: 6rem;
+  line-height: 1;
+  @media screen and (max-width: 1000px) {
+    font-size: 3rem;
+  }
+`;
+
 function App() {
   const [showAddModal, setShowAddModal] = useState(false);
   const [allEvents, setEvent] = useState(events);
@@ -113,7 +121,7 @@ function App() {
     <>
       <GlobalCss />
       <Header>
-        <h1 style={{ fontSize: "6rem", lineHeight: 1 }}>Events</h1>
+        <H1>Events</H1>
         <BtnAdd
           className={"desktop-only"}
           style={{ marginTop: "1.75rem" }}

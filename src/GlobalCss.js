@@ -16,6 +16,9 @@ const GlobalCss = createGlobalStyle`
 
   body {
     padding: 10vmin;
+    @media screen and (max-width: 1000px) {
+      padding: 2rem 1rem;
+    }
   }
 
 /* Source https://css-tricks.com/overriding-default-button-styles/ */
