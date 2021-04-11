@@ -1,8 +1,9 @@
 import styled from "styled-components";
 import moment from "moment";
 
-const Container = styled.div`
+const Container = styled.button`
   margin-bottom: 0.5rem;
+  text-align: left;
   border-radius: 8px;
   overflow: hidden;
   cursor: pointer;
@@ -28,6 +29,15 @@ const Container = styled.div`
     }
   }
 `;
+
+const formatDates = ({ startDate, endDate }) => {
+  if (startDate && endDate) {
+    const start = moment(startDate).format("MMMM D, YYYY");
+    const end = moment(endDate).format("MMMM D, YYYY");
+    return `${start} - ${end}`;
+  }
+  return moment(startDate).format("dddd, MMMM D, YYYY");
+};
 
 function EventCard({
   title,
@@ -87,8 +97,7 @@ function EventCard({
             letterSpacing: ".03rem",
           }}
         >
-          {/* {moment(startDate).format("MMMM Do YYYY, h:mma")} */}
-          {moment(startDate).format("dddd, MMMM D, YYYY")}
+          {formatDates({ startDate, endDate })}
         </h3>
       </div>
     </Container>

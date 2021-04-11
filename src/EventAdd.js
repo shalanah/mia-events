@@ -22,7 +22,7 @@ const Label = styled.label`
     display: block;
   }
   textarea {
-    min-height: 300px;
+    min-height: 250px;
   }
   input,
   textarea,
@@ -44,10 +44,23 @@ const Label = styled.label`
     font-size: 1rem;
   }
 `;
-const SubmitBtn = styled(BtnPrimary)`
+const Btns = styled(BtnPrimary)`
+  height: 45px;
+`;
+const BtnSubmit = styled(Btns)`
   display: block;
   width: 100%;
-  margin-top: 1.5rem;
+`;
+const BtnRemove = styled(Btns)`
+  background: red;
+`;
+const BtnDupe = styled(Btns)`
+  background: #fff;
+  color: #000;
+  border: 2px solid #000;
+  :hover {
+    color: #fff;
+  }
 `;
 
 // Makes 30min intervals for selection
@@ -61,28 +74,25 @@ for (var i = 0; i < 24; i++) {
 }
 
 // Can also be EventUpdate
-function EventAdd({ addEvent, onClose, updateEvent, updatingEvent }) {
-  console.log(updatingEvent);
+function EventAdd({ onAdd, onRemove, onClose, onUpdate, event }) {
   const [startDate, setStartDate] = useState(
-    updatingEvent ? moment(updatingEvent.startDate) : moment()
+    event ? moment(event.startDate) : moment()
   );
   const [endDate, setEndDate] = useState(
-    updatingEvent ? moment(updatingEvent.endDate) : moment().add(1, "days")
+    event ? moment(event.endDate) : moment().add(1, "days")
   );
-  const [multiDay, setMultiDay] = useState(
-    updatingEvent ? !!updatingEvent.endDate : false
-  );
+  const [multiDay, setMultiDay] = useState(event ? !!event.endDate : false);
   const [focus1, setFocus1] = useState(null);
   const [focus2, setFocus2] = useState(null);
-  const [title, setTitle] = useState(updatingEvent ? updatingEvent.title : "");
+  const [title, setTitle] = useState(event ? event.title : "");
   const [description, setDescription] = useState(
-    updatingEvent ? updatingEvent.description : ""
+    event ? event.description : ""
   );
-  const [img, setImg] = useState(updatingEvent ? updatingEvent.img : "");
+  const [img, setImg] = useState(event ? event.img : "");
 
   const onSubmit = () => {
     // TODO: Add validation
-    addEvent({
+    onAdd({
       title,
       description,
       img,
@@ -92,13 +102,13 @@ function EventAdd({ addEvent, onClose, updateEvent, updatingEvent }) {
     });
     onClose();
   };
-  const onUpdate = () => {
-    updateEvent({
+  const handleUpdate = () => {
+    onUpdate({
       title,
       description,
       img,
       startDate: moment(startDate).valueOf(),
-      createdDate: updatingEvent.createdDate,
+      createdDate: event.createdDate,
       updatedDate: Date.now(),
       ...(multiDay && { endDate }),
     });
@@ -115,12 +125,12 @@ function EventAdd({ addEvent, onClose, updateEvent, updatingEvent }) {
           borderBottom: "2px solid #000",
         }}
       >
-        {updatingEvent ? "Update Event" : "Add Event"}
+        {event ? "Update Event" : "Add New Event"}
       </h2>
       <Label>
         <span>Title</span>
         <input
-          defaultValue={title}
+          checked={multiDay}
           type={"text"}
           onChange={(e) => {
             setTitle(e.target.value);
@@ -236,9 +246,26 @@ function EventAdd({ addEvent, onClose, updateEvent, updatingEvent }) {
           style={{ display: "inline", width: "auto" }}
         />
       </Label>
-      <SubmitBtn onClick={updatingEvent ? onUpdate : onSubmit}>
-        {updatingEvent ? "Update" : "Submit"}
-      </SubmitBtn>
+      <div style={{ marginTop: "1.5rem", display: "flex", gap: "10px" }}>
+        {event ? (
+          <>
+            <BtnRemove
+              onClick={() => {
+                onRemove();
+                onClose();
+              }}
+            >
+              Remove
+            </BtnRemove>
+            <BtnDupe onClick={onSubmit}>Add as new</BtnDupe>
+            <Btns style={{ flex: "1" }} onClick={handleUpdate}>
+              Update
+            </Btns>
+          </>
+        ) : (
+          <BtnSubmit onClick={onSubmit}>Submit</BtnSubmit>
+        )}
+      </div>
     </div>
   );
 }

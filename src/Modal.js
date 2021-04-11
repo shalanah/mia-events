@@ -30,7 +30,6 @@ const Bg = styled.div`
   overflow: auto;
   animation: 0.1s ${fadeIn};
   display: flex;
-  color: #555;
 `;
 const Modal = styled.div`
   position: relative;

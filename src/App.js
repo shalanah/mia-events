@@ -1,4 +1,5 @@
 import { useState } from "react";
+import Btn from "./Btn";
 import styled from "styled-components";
 import { events } from "./events";
 import EventCard from "./EventCard";
@@ -7,11 +8,11 @@ import Modal from "./Modal";
 import EventAdd from "./EventAdd";
 import GlobalCss from "./GlobalCss";
 import moment from "moment";
-import SvgFilter from "./SvgFilter";
 
-const TimeBtn = styled.button`
+const TimeBtn = styled(Btn)`
   font-size: 1rem;
   color: #777;
+  outline-offset: 4px;
   transition: 0.1s;
   :hover {
     color: #000;
@@ -54,8 +55,15 @@ const TimeContainer = styled.div`
 const EventsContainer = styled.div`
   width: 100%;
   display: grid;
+  margin-bottom: 10vmin;
   grid-template-columns: repeat(3, 1fr);
   gap: 1rem;
+  @media screen and (max-width: 1400px) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  @media screen and (max-width: 1000px) {
+    grid-template-columns: repeat(1, 1fr);
+  }
 `;
 
 const timeBuckets = ["featured", "upcoming", "past"];
@@ -77,8 +85,22 @@ const getFormattedEvents = (allEvents) => {
   return formatted;
 };
 
+const Header = styled.header`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 0 1rem 0rem;
+  border-bottom: 3px solid #000;
+`;
+
+const Main = styled.main`
+  display: flex;
+  align-items: flex-start;
+  padding-top: 2rem;
+`;
+
 function App() {
-  const [showAddModal, setShowAddModal] = useState(true);
+  const [showAddModal, setShowAddModal] = useState(false);
   const [allEvents, setEvent] = useState(events);
   const [updateIndex, setUpdateIndex] = useState(null);
   const [timeBucket, setTimeBucket] = useState(timeBuckets[0]);
@@ -87,16 +109,7 @@ function App() {
   return (
     <>
       <GlobalCss />
-      <SvgFilter />
-      <div
-        style={{
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "space-between",
-          padding: "0 0 1rem 0rem",
-          borderBottom: "3px solid #000",
-        }}
-      >
+      <Header>
         <h1 style={{ fontSize: "6rem", lineHeight: 1 }}>Events</h1>
         <BtnAdd
           style={{ marginTop: "1.75rem" }}
@@ -108,19 +121,13 @@ function App() {
           <span />
           Add event
         </BtnAdd>
-      </div>
-      <div
-        style={{
-          display: "flex",
-          alignItems: "flex-start",
-          paddingTop: "2rem",
-        }}
-      >
+      </Header>
+      <Main>
         <TimeContainer>
           {timeBuckets.map((name) => {
             const active = timeBucket === name;
             return (
-              <div style={{ position: "relative" }}>
+              <div style={{ position: "relative" }} key={name}>
                 <TimeBtn
                   onClick={() => setTimeBucket(name)}
                   className={active ? "active" : ""}
@@ -162,15 +169,6 @@ function App() {
             >
               Looks like there aren't any events here.
             </p>
-            <p
-              style={{
-                fontSize: "2rem",
-                marginBottom: "1rem",
-                fontWeight: "300",
-              }}
-            >
-              You can fix that by adding one! 🗓
-            </p>
             <BtnAdd
               style={{ marginTop: "1.75rem" }}
               onClick={() => setShowAddModal(true)}
@@ -197,8 +195,9 @@ function App() {
                     return b.startDate - a.startDate;
                 }
               })
-              .map((data) => (
+              .map((data, i) => (
                 <EventCard
+                  key={i}
                   onClick={() => {
                     setUpdateIndex(data.index);
                     setShowAddModal(true);
@@ -208,7 +207,7 @@ function App() {
               ))}
           </EventsContainer>
         )}
-      </div>
+      </Main>
       {showAddModal && (
         <Modal
           onClick={() => setShowAddModal(false)}
@@ -217,16 +216,24 @@ function App() {
           <EventAdd
             key={updateIndex}
             onClose={() => setShowAddModal(false)}
-            updatingEvent={allEvents[updateIndex]}
-            updateEvent={(event) => {
+            event={allEvents[updateIndex]}
+            onUpdate={(event) => {
               setEvent((prev) => {
                 const nextEvents = [...prev];
                 nextEvents[updateIndex] = event;
                 return nextEvents;
               });
             }}
-            addEvent={(addEvent) => {
-              setEvent((prev) => [...prev, addEvent]);
+            onRemove={() => {
+              setEvent((prev) => {
+                return [
+                  ...prev.slice(0, updateIndex),
+                  ...prev.slice(updateIndex + 1),
+                ];
+              });
+            }}
+            onAdd={(onAdd) => {
+              setEvent((prev) => [...prev, onAdd]);
             }}
           />
         </Modal>

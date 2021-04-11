@@ -7,27 +7,64 @@ const GlobalCss = createGlobalStyle`
     width: 100%;
     height: 100%;
   }
-  *, *:after, *:before {
+  *, *:after, *:before{
     box-sizing: border-box;
     margin: 0;
     padding: 0;
     font-family: 'Montserrat', sans-serif;
   }
-  #root {
+
+  body {
     padding: 10vmin;
   }
-  button {
-    background: none;
-    font-weight: 600;
-    letter-spacing: .03rem;
-    outline: none;
-    border: none;
-    cursor: pointer;
-    text-transform: uppercase;
+
+/* Source https://css-tricks.com/overriding-default-button-styles/ */
+  /**
+ * 1. Change the font styles in all browsers.
+ * 2. Remove the margin in Firefox and Safari.
+ */
+
+  button,
+  input,
+  optgroup,
+  select,
+  textarea {
+    font-family: inherit; /* 1 */
+    font-size: 100%; /* 1 */
+    line-height: 1.15; /* 1 */
+    margin: 0; /* 2 */
   }
-  :focus {
-    // TODO: add some distance to the border or outline
-    border: 1px solid dotted;
+
+  /**
+  * Show the overflow in IE.
+  * 1. Show the overflow in Edge.
+  */
+
+  button,
+  input { /* 1 */
+    overflow: visible;
+  }
+
+  /**
+  * Remove the inheritance of text transform in Edge, Firefox, and IE.
+  * 1. Remove the inheritance of text transform in Firefox.
+  */
+
+  button,
+  select { /* 1 */
+    text-transform: none;
+  }
+
+  /**
+  * Correct the inability to style clickable types in iOS and Safari.
+  */
+
+  button,
+  [type="button"],
+  [type="reset"],
+  [type="submit"] {
+    -webkit-appearance: button;
+    background: none;
   }
 `;
 
