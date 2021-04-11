@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import moment from "moment";
 
 const Container = styled.div`
   margin-bottom: 0.5rem;
@@ -28,43 +29,17 @@ const Container = styled.div`
   }
 `;
 
-function EventCard({ title, description, date, img, alt }) {
+function EventCard({
+  title,
+  description,
+  startDate,
+  endDate,
+  img,
+  alt,
+  ...props
+}) {
   return (
-    <Container>
-      <svg style={{ position: "absolute", left: "-100%", top: "-100%" }}>
-        <filter
-          id="filter"
-          x="-10%"
-          y="-10%"
-          width="120%"
-          height="120%"
-          filterUnits="objectBoundingBox"
-          primitiveUnits="userSpaceOnUse"
-          color-interpolation-filters="sRGB"
-        >
-          <feColorMatrix
-            type="matrix"
-            values="1 0 0 0 0
-1 0 0 0 0
-1 0 0 0 0
-0 0 0 1 0"
-            in="SourceGraphic"
-            result="colormatrix"
-          />
-          <feComponentTransfer in="colormatrix" result="componentTransfer">
-            <feFuncR type="table" tableValues="0.43 0.97" />
-            <feFuncG type="table" tableValues="0.06 0.88" />
-            <feFuncB type="table" tableValues="0.37 0.79" />
-            <feFuncA type="table" tableValues="0 1" />
-          </feComponentTransfer>
-          <feBlend
-            mode="normal"
-            in="componentTransfer"
-            in2="SourceGraphic"
-            result="blend"
-          />
-        </filter>
-      </svg>
+    <Container {...props}>
       <div
         style={{
           width: "100%",
@@ -77,12 +52,9 @@ function EventCard({ title, description, date, img, alt }) {
           src={img}
           alt={alt}
           style={{
-            position: "absolute",
-            left: "50%",
-            top: "50%",
-            transform: "translate(-50%, -50%)",
+            objectFit: "cover",
             width: "100%",
-            height: "auto",
+            height: "100%",
           }}
         />
       </div>
@@ -115,7 +87,8 @@ function EventCard({ title, description, date, img, alt }) {
             letterSpacing: ".03rem",
           }}
         >
-          {date}
+          {/* {moment(startDate).format("MMMM Do YYYY, h:mma")} */}
+          {moment(startDate).format("dddd, MMMM D, YYYY")}
         </h3>
       </div>
     </Container>

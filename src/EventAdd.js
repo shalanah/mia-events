@@ -3,6 +3,7 @@ import { useState } from "react";
 import "react-dates/initialize";
 import "react-dates/lib/css/_datepicker.css";
 import moment from "moment";
+import BtnPrimary from "./BtnPrimary";
 import { SingleDatePicker } from "react-dates";
 
 const Label = styled.label`
@@ -43,7 +44,13 @@ const Label = styled.label`
     font-size: 1rem;
   }
 `;
+const SubmitBtn = styled(BtnPrimary)`
+  display: block;
+  width: 100%;
+  margin-top: 1.5rem;
+`;
 
+// Makes 30min intervals for selection
 const times = [];
 const divisions = 2;
 const beginHour = 7;
@@ -53,34 +60,67 @@ for (var i = 0; i < 24; i++) {
   }
 }
 
-function EventAdd({ addEvent, onClose }) {
-  const [startDate, setStartDate] = useState(moment());
-  const [endDate, setEndDate] = useState(moment());
-  const [multiDay, setMultiDay] = useState(false);
+// Can also be EventUpdate
+function EventAdd({ addEvent, onClose, updateEvent, updatingEvent }) {
+  console.log(updatingEvent);
+  const [startDate, setStartDate] = useState(
+    updatingEvent ? moment(updatingEvent.startDate) : moment()
+  );
+  const [endDate, setEndDate] = useState(
+    updatingEvent ? moment(updatingEvent.endDate) : moment().add(1, "days")
+  );
+  const [multiDay, setMultiDay] = useState(
+    updatingEvent ? !!updatingEvent.endDate : false
+  );
   const [focus1, setFocus1] = useState(null);
   const [focus2, setFocus2] = useState(null);
-  const [title, setTitle] = useState("");
-  const [description, setDescription] = useState("");
-  const [img, setImg] = useState("");
+  const [title, setTitle] = useState(updatingEvent ? updatingEvent.title : "");
+  const [description, setDescription] = useState(
+    updatingEvent ? updatingEvent.description : ""
+  );
+  const [img, setImg] = useState(updatingEvent ? updatingEvent.img : "");
 
   const onSubmit = () => {
-    // TODO: there should def be some checking of input + warnings
+    // TODO: Add validation
     addEvent({
-      img,
       title,
       description,
+      img,
       startDate: moment(startDate).valueOf(),
-      createdDate: Date.now(), // maybe updated
+      createdDate: Date.now(), // TODO: add updated too
+      ...(multiDay && { endDate }),
     });
     onClose();
   };
-  console.log({ img, title, description, startDate, endDate, multiDay });
+  const onUpdate = () => {
+    updateEvent({
+      title,
+      description,
+      img,
+      startDate: moment(startDate).valueOf(),
+      createdDate: updatingEvent.createdDate,
+      updatedDate: Date.now(),
+      ...(multiDay && { endDate }),
+    });
+    onClose();
+  };
 
   return (
     <div style={{ padding: "2rem" }}>
+      <h2
+        style={{
+          textAlign: "left",
+          fontSize: "2.5rem",
+          paddingBottom: ".5rem",
+          borderBottom: "2px solid #000",
+        }}
+      >
+        {updatingEvent ? "Update Event" : "Add Event"}
+      </h2>
       <Label>
         <span>Title</span>
         <input
+          defaultValue={title}
           type={"text"}
           onChange={(e) => {
             setTitle(e.target.value);
@@ -96,6 +136,7 @@ function EventAdd({ addEvent, onClose }) {
       >
         <span style={{ display: "inline" }}>Multi-day event</span>
         <input
+          defaultValue={multiDay}
           style={{
             display: "inline",
             padding: "0px",
@@ -110,6 +151,7 @@ function EventAdd({ addEvent, onClose }) {
         <Label style={{ display: "inline-block", flex: "1" }}>
           <span>Start Date</span>
           <SingleDatePicker
+            isOutsideRange={() => false}
             date={startDate}
             numberOfMonths={1}
             onDateChange={(date) => setStartDate(date)}
@@ -162,19 +204,21 @@ function EventAdd({ addEvent, onClose }) {
           <Label style={{ display: "inline-block", marginLeft: 10, flex: "1" }}>
             <span>End Date</span>
             <SingleDatePicker
+              isOutsideRange={() => false}
               date={endDate}
               numberOfMonths={1}
               onDateChange={(date) => setEndDate(date)}
               focused={focus2}
               onFocusChange={({ focused }) => setFocus2(focused)}
-              id="end" // PropTypes.string.isRequired,
+              id="end"
             />
           </Label>
         )}
       </div>
       <Label>
-        <span>Description (Markdown)</span>
+        <span>Description</span>
         <textarea
+          defaultValue={description}
           onChange={(e) => {
             setDescription(e.target.value);
           }}
@@ -184,6 +228,7 @@ function EventAdd({ addEvent, onClose }) {
         <span style={{ display: "inline", marginRight: 10 }}>Image</span>
         <input
           type={"file"}
+          // defaultValue={img}
           onChange={(e) => {
             const file = e?.target?.files?.[0];
             if (file) setImg(URL.createObjectURL(file));
@@ -191,8 +236,9 @@ function EventAdd({ addEvent, onClose }) {
           style={{ display: "inline", width: "auto" }}
         />
       </Label>
-      <button>Clear</button>
-      <button onClick={onSubmit}>Submit</button>
+      <SubmitBtn onClick={updatingEvent ? onUpdate : onSubmit}>
+        {updatingEvent ? "Update" : "Submit"}
+      </SubmitBtn>
     </div>
   );
 }
