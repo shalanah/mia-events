@@ -66,6 +66,11 @@ const GlobalCss = createGlobalStyle`
     -webkit-appearance: button;
     background: none;
   }
+  .desktop-only {
+    @media screen and (max-width: 1000px) {
+      display: none;
+    }
+  }
 `;
 
 export default GlobalCss;

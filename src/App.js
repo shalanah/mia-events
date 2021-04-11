@@ -26,7 +26,6 @@ const TimeContainer = styled.div`
   text-align: right;
   display: inline-block;
   border-radius: 10px;
-  margin: 0 1rem 0 0;
   background: #efefef;
   min-width: 220px;
   padding: 1.5rem 1rem;
@@ -97,6 +96,10 @@ const Main = styled.main`
   display: flex;
   align-items: flex-start;
   padding-top: 2rem;
+  gap: 20px;
+  @media screen and (max-width: 1000px) {
+    flex-direction: column;
+  }
 `;
 
 function App() {
@@ -112,6 +115,7 @@ function App() {
       <Header>
         <h1 style={{ fontSize: "6rem", lineHeight: 1 }}>Events</h1>
         <BtnAdd
+          className={"desktop-only"}
           style={{ marginTop: "1.75rem" }}
           onClick={() => {
             setUpdateIndex(null);
