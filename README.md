@@ -32,11 +32,12 @@ https://mia-events.netlify.app
 
 ## Areas of future improvement
 
-- Hook up to a db for persistance. All of the data is local for now and only held in your session.
-- Mobile / responsive adjustments especially on form
+- Browser testing / fallbacks - would suggest using Chrome or Firefox. Used a lot of modern CSS (for fun).
+- Hook up to a db for persistance. All of the data is only held in your session.
+- More mobile / responsive adjustments
 - Tweaks to form visuals especially upload image area
 - Show live view of event then allow to edit
-- Handle times not just dates (in UI but haven't hooked up yet)
+- Handle times not just dates. Add to UI but haven't hooked up yet.
 - Warn user before deleting or leaving an unsaved modal
 - Form validations + warnings ie: empty field
 
