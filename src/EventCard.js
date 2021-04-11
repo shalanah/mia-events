@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import moment from "moment";
+import tempImg from "./assets/mia.jpg";
 
 const Container = styled.button`
   margin-bottom: 0.5rem;
@@ -59,7 +60,7 @@ function EventCard({
         }}
       >
         <img
-          src={img}
+          src={img || tempImg}
           alt={alt}
           style={{
             objectFit: "cover",

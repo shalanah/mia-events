@@ -17,7 +17,6 @@ const Label = styled.label`
     font-weight: 700;
     letter-spacing: 0.05em;
     margin: 15px 0px 8px 0px;
-    min-width: 100px;
     white-space: nowrap;
     display: block;
   }
@@ -130,7 +129,7 @@ function EventAdd({ onAdd, onRemove, onClose, onUpdate, event }) {
       <Label>
         <span>Title</span>
         <input
-          checked={multiDay}
+          defaultValue={title}
           type={"text"}
           onChange={(e) => {
             setTitle(e.target.value);
@@ -146,7 +145,7 @@ function EventAdd({ onAdd, onRemove, onClose, onUpdate, event }) {
       >
         <span style={{ display: "inline" }}>Multi-day event</span>
         <input
-          defaultValue={multiDay}
+          defaultChecked={multiDay}
           style={{
             display: "inline",
             padding: "0px",
@@ -175,7 +174,7 @@ function EventAdd({ onAdd, onRemove, onClose, onUpdate, event }) {
             <span>Start Time</span>
             <select>
               <option>N/A</option>
-              {times.map(({ h, m }) => {
+              {times.map(({ h, m }, i) => {
                 let min = (m + "").split("").length === 1 ? `0${m}` : m;
                 let hours = h;
                 let pm = false;
@@ -185,7 +184,11 @@ function EventAdd({ onAdd, onRemove, onClose, onUpdate, event }) {
                 }
                 if (hours === 0) hours = 12;
                 hours = (hours + "").split("") === 1 ? `0${hours}` : hours;
-                return <option>{`${hours}:${min} ${pm ? "PM" : "AM"}`}</option>;
+                return (
+                  <option key={i}>{`${hours}:${min} ${
+                    pm ? "PM" : "AM"
+                  }`}</option>
+                );
               })}
             </select>
           </Label>
@@ -195,7 +198,7 @@ function EventAdd({ onAdd, onRemove, onClose, onUpdate, event }) {
             <span>End Time</span>
             <select>
               <option>N/A</option>
-              {times.map(({ h, m }) => {
+              {times.map(({ h, m }, i) => {
                 let min = (m + "").split("").length === 1 ? `0${m}` : m;
                 let hours = h;
                 let pm = false;
@@ -205,7 +208,11 @@ function EventAdd({ onAdd, onRemove, onClose, onUpdate, event }) {
                 }
                 if (hours === 0) hours = 12;
                 hours = (hours + "").split("") === 1 ? `0${hours}` : hours;
-                return <option>{`${hours}:${min} ${pm ? "PM" : "AM"}`}</option>;
+                return (
+                  <option key={i}>{`${hours}:${min} ${
+                    pm ? "PM" : "AM"
+                  }`}</option>
+                );
               })}
             </select>
           </Label>
@@ -234,11 +241,19 @@ function EventAdd({ onAdd, onRemove, onClose, onUpdate, event }) {
           }}
         />
       </Label>
-      <Label style={{ marginTop: 10 }}>
+      <Label style={{ marginTop: 10, display: "flex", alignItems: "center" }}>
         <span style={{ display: "inline", marginRight: 10 }}>Image</span>
+        {img && (
+          <img
+            src={img}
+            style={{ marginRight: 10 }}
+            height={40}
+            alt={"thumbnail"}
+          />
+        )}
         <input
           type={"file"}
-          // defaultValue={img}
+          accept={"image/*"}
           onChange={(e) => {
             const file = e?.target?.files?.[0];
             if (file) setImg(URL.createObjectURL(file));
