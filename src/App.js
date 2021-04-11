@@ -125,6 +125,10 @@ function App() {
   const [timeBucket, setTimeBucket] = useState(timeBuckets[0]);
   const formattedEvents = getFormattedEvents(allEvents);
   const showEvents = formattedEvents[timeBucket] || [];
+  const handleAddBtn = () => {
+    setUpdateIndex(null);
+    setShowAddModal(true);
+  };
   return (
     <>
       <GlobalCss />
@@ -133,10 +137,7 @@ function App() {
         <BtnAdd
           className={"desktop-only"}
           style={{ marginTop: "1.75rem" }}
-          onClick={() => {
-            setUpdateIndex(null);
-            setShowAddModal(true);
-          }}
+          onClick={handleAddBtn}
         >
           <span />
           Add event
@@ -158,13 +159,7 @@ function App() {
               </div>
             );
           })}
-          <BtnAdd
-            style={{ marginTop: "1.75rem" }}
-            onClick={() => {
-              setUpdateIndex(null);
-              setShowAddModal(true);
-            }}
-          >
+          <BtnAdd style={{ marginTop: "1.75rem" }} onClick={handleAddBtn}>
             <span />
             Add event
           </BtnAdd>
@@ -189,10 +184,7 @@ function App() {
             >
               Looks like there aren't any events here.
             </p>
-            <BtnAdd
-              style={{ marginTop: "1.75rem" }}
-              onClick={() => setShowAddModal(true)}
-            >
+            <BtnAdd style={{ marginTop: "1.75rem" }} onClick={handleAddBtn}>
               <span />
               Add event
             </BtnAdd>
