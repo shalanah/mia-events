@@ -173,7 +173,7 @@ function App() {
                 marginTop: "1rem",
               }}
             >
-              Oooooops!
+              Oooops!
             </h2>
             <p
               style={{
