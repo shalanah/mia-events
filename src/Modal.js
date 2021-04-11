@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import ReactDOM from "react-dom";
 import styled, { keyframes } from "styled-components";
 import useKeyPress from "./hooks/useKeypress";
@@ -25,7 +26,7 @@ const Bg = styled.div`
   left: 0px;
   width: 100%;
   top: 0px;
-  position: absolute;
+  position: fixed;
   overflow: auto;
   animation: 0.1s ${fadeIn};
   display: flex;
@@ -37,10 +38,10 @@ const Modal = styled.div`
   background: #fff;
   border: 1px solid #ccc;
   height: auto;
-  overflow: hidden;
   margin: auto;
   text-align: center;
-  width: auto;
+  /* width: 100% */
+  width: clamp(500px, 50%, 700px);
   animation: 0.125s ${comeUp};
   @media screen and (max-width: 600px) {
     width: calc(100% - 20px);
@@ -57,17 +58,9 @@ const Modal = styled.div`
   }
 `;
 
-const Pad1 = styled.div`
-  transition: 0.2s ease-in-out transform, 0.1s opacity ease-in;
-  padding: 30px;
-  @media screen and (max-width: 900px) {
-    padding: 30px 15px;
-  }
-`;
 const Close = styled.span`
-  background: #eee;
   cursor: pointer;
-  border: 1px solid rgba(0, 0, 0, 0.1);
+  border: 2px solid #000;
   &::before,
   &::after {
     content: "";
@@ -77,7 +70,7 @@ const Close = styled.span`
     position: absolute;
     width: 60%;
     height: 2px;
-    background: #aaa;
+    background: #000;
   }
   &::after {
     transform: translate(-50%, -50%) rotate(-45deg);
@@ -86,6 +79,12 @@ const Close = styled.span`
 
 const DownloadModal = ({ onClose, children, ...props }) => {
   useKeyPress("Escape", onClose);
+  useEffect(() => {
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, []);
   return ReactDOM.createPortal(
     <>
       <Bg {...props}>
@@ -94,7 +93,17 @@ const DownloadModal = ({ onClose, children, ...props }) => {
             e.stopPropagation();
           }}
         >
-          <Close onClick={onClose} />
+          <Close
+            style={{
+              position: "absolute",
+              borderRadius: "100%",
+              height: 26,
+              width: 26,
+              top: 8,
+              right: 8,
+            }}
+            onClick={onClose}
+          />
           {children}
         </Modal>
       </Bg>
