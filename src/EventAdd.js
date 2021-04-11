@@ -53,18 +53,39 @@ for (var i = 0; i < 24; i++) {
   }
 }
 
-function AddEvent() {
+function EventAdd({ addEvent, onClose }) {
   const [startDate, setStartDate] = useState(moment());
   const [endDate, setEndDate] = useState(moment());
   const [multiDay, setMultiDay] = useState(false);
   const [focus1, setFocus1] = useState(null);
   const [focus2, setFocus2] = useState(null);
+  const [title, setTitle] = useState("");
+  const [description, setDescription] = useState("");
+  const [img, setImg] = useState("");
+
+  const onSubmit = () => {
+    // TODO: there should def be some checking of input + warnings
+    addEvent({
+      img,
+      title,
+      description,
+      startDate: moment(startDate).valueOf(),
+      createdDate: Date.now(), // maybe updated
+    });
+    onClose();
+  };
+  console.log({ img, title, description, startDate, endDate, multiDay });
 
   return (
-    <form style={{ padding: "2rem" }}>
+    <div style={{ padding: "2rem" }}>
       <Label>
         <span>Title</span>
-        <input type={"text"} />
+        <input
+          type={"text"}
+          onChange={(e) => {
+            setTitle(e.target.value);
+          }}
+        />
       </Label>
       <Label
         style={{
@@ -152,17 +173,28 @@ function AddEvent() {
         )}
       </div>
       <Label>
-        <span>Description (Use Markdown)</span>
-        <textarea />
+        <span>Description (Markdown)</span>
+        <textarea
+          onChange={(e) => {
+            setDescription(e.target.value);
+          }}
+        />
       </Label>
       <Label style={{ marginTop: 10 }}>
         <span style={{ display: "inline", marginRight: 10 }}>Image</span>
-        <input type={"file"} style={{ display: "inline", width: "auto" }} />
+        <input
+          type={"file"}
+          onChange={(e) => {
+            const file = e?.target?.files?.[0];
+            if (file) setImg(URL.createObjectURL(file));
+          }}
+          style={{ display: "inline", width: "auto" }}
+        />
       </Label>
       <button>Clear</button>
-      <button>Submit</button>
-    </form>
+      <button onClick={onSubmit}>Submit</button>
+    </div>
   );
 }
 
-export default AddEvent;
+export default EventAdd;

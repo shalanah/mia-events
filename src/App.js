@@ -4,7 +4,7 @@ import { events } from "./events";
 import EventCard from "./EventCard";
 import AddBtn from "./AddBtn";
 import Modal from "./Modal";
-import AddEvent from "./AddEvent";
+import EventAdd from "./EventAdd";
 
 const CSSReset = createGlobalStyle`
   body, html {
@@ -153,7 +153,12 @@ function App() {
           onClick={() => setShowAddModal(false)}
           onClose={() => setShowAddModal(false)}
         >
-          <AddEvent />
+          <EventAdd
+            onClose={() => setShowAddModal(false)}
+            addEvent={(addEvent) => {
+              setEvent((prev) => [...prev, addEvent]);
+            }}
+          />
         </Modal>
       )}
     </>

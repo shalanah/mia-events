@@ -5,6 +5,8 @@ const Container = styled.div`
   border-radius: 8px;
   overflow: hidden;
   cursor: pointer;
+  display: flex;
+  flex-direction: column;
   border: 1px solid #ccc;
   transition: 0.2s;
   p {
@@ -84,16 +86,27 @@ function EventCard({ title, description, date, img, alt }) {
           }}
         />
       </div>
-      <div style={{ padding: "1rem 1rem 1.5rem" }}>
-        <h2
-          style={{
-            fontSize: "1.25rem",
-            marginBottom: ".75rem",
-          }}
-        >
-          {title}
-        </h2>
-        <p>{description}</p>
+      <div
+        style={{
+          padding: "1rem 1rem 1.5rem",
+          display: "flex",
+          flexDirection: "column",
+          height: "auto",
+          flex: "1",
+          justifyContent: "space-between",
+        }}
+      >
+        <div>
+          <h2
+            style={{
+              fontSize: "1.25rem",
+              marginBottom: ".75rem",
+            }}
+          >
+            {title}
+          </h2>
+          <p>{description}</p>
+        </div>
         <h3
           style={{
             fontSize: "1rem",
