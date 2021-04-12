@@ -27,18 +27,19 @@ https://mia-events.netlify.app
 - Edit events
 - Duplicate / alter events
 - Remove events
-- Sort events into 3 buckets and display with counts
-- Some mobile/responsive capabilities but WIP
+- Sort events into 3 timeframes and display with counts
+- Basic mobile / responsive capabilities
+
 
 ## Areas of future improvement
 
 - Browser testing / fallbacks - would suggest using Chrome or Firefox. Used a lot of modern CSS (for fun). Especially fallbacks for unsupported `gap` flexbox feature in Safari.
-- Handle times not just dates. Added to UI but haven't hooked up yet.
 - Add a db for persistance. All of the data is held in your session for now.
 - More mobile / responsive adjustments
 - Tweaks to form especially upload image area, adding validation, and adding warnings before leaving unsaved or deleting.
 - Show live view of event then allow to edit.
+- Of course with any site add favicon and og images and meta tags
 
-## Video / Screenshots
+## Screenshots
 
-TBD
+See screenshot folder :)
