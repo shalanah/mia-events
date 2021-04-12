@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import moment from "moment";
 import tempImg from "./assets/mia.jpg";
+import { formatHoursAndMinutes } from "./lib";
 
 const Container = styled.button`
   margin-bottom: 0.5rem;
@@ -27,13 +28,31 @@ const Container = styled.button`
   }
 `;
 
-const formatDates = ({ startDate, endDate }) => {
-  if (startDate && endDate) {
+const formatDates = ({ startDate, endDate, startTime, endTime }) => {
+  if (startDate && endDate && moment(startDate).diff(endDate, "days") !== 0) {
     const start = moment(startDate).format("MMMM D, YYYY");
     const end = moment(endDate).format("MMMM D, YYYY");
     return `${start} - ${end}`;
   }
-  return moment(startDate).format("dddd, MMMM D, YYYY");
+  const formatStartTime = startTime
+    ? formatHoursAndMinutes({
+        h: startTime[0],
+        m: startTime[1],
+        spaceBetween: false,
+      })
+    : "";
+  const formatEndTime = endTime
+    ? formatHoursAndMinutes({
+        h: endTime[0],
+        m: endTime[1],
+        spaceBetween: false,
+      })
+    : "";
+  const isThisYear = moment(startDate).year() === moment().year();
+  const format = isThisYear ? "dddd, MMMM D" : "dddd, MMMM D, YYYY";
+  return `${moment(startDate).format(format)}${
+    formatStartTime ? `, ${formatStartTime}` : ""
+  }${formatEndTime ? ` - ${formatEndTime}` : ""}`;
 };
 
 function EventCard({
@@ -41,6 +60,8 @@ function EventCard({
   description,
   startDate,
   endDate,
+  startTime,
+  endTime,
   img,
   alt,
   ...props
@@ -89,12 +110,12 @@ function EventCard({
         <h3
           style={{
             fontSize: "1rem",
-            lineHeight: 1,
+            lineHeight: 1.2,
             marginTop: ".9rem",
             letterSpacing: ".03rem",
           }}
         >
-          {formatDates({ startDate, endDate })}
+          {formatDates({ startDate, endDate, startTime, endTime })}
         </h3>
       </div>
     </Container>
