@@ -30,7 +30,6 @@ https://mia-events.netlify.app
 - Sort events into 3 timeframes and display with counts
 - Basic mobile / responsive capabilities
 
-
 ## Areas of future improvement
 
 - Browser testing / fallbacks - would suggest using Chrome or Firefox. Used a lot of modern CSS (for fun). Especially fallbacks for unsupported `gap` flexbox feature in Safari.
@@ -42,4 +41,14 @@ https://mia-events.netlify.app
 
 ## Screenshots
 
-See screenshot folder :)
+### Homepage
+
+![Home page](https://github.com/shalanah/mia-events/blob/main/screenshots/home.png?raw=true)
+
+### Add an event
+
+![Add an event](https://github.com/shalanah/mia-events/blob/main/screenshots/add.png?raw=true)
+
+### Update an event
+
+![Update an event](https://github.com/shalanah/mia-events/blob/main/screenshots/update.png?raw=true)
