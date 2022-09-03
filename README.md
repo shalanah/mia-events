@@ -1,4 +1,4 @@
-# MIA Code Challenge
+# Events calendar
 
 ## Prompt
 
