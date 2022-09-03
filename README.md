@@ -15,11 +15,6 @@ Write a reusable function to organize the objects from newest to oldest within F
 
 https://mia-events.netlify.app
 
-## Running Locally
-
-- `npm i` or `yarn install`
-- `npm start` or `yarn start`
-
 ## Capabilities
 
 - Add events
@@ -29,15 +24,6 @@ https://mia-events.netlify.app
 - Remove events
 - Sort events into 3 timeframes and display with counts
 - Basic mobile / responsive capabilities
-
-## Areas of future improvement
-
-- Browser testing / fallbacks - would suggest using Chrome or Firefox. Used a lot of modern CSS (for fun). Especially fallbacks for unsupported `gap` flexbox feature in Safari.
-- Add a db for persistance. All of the data is held in your session for now.
-- More mobile / responsive adjustments
-- Tweaks to form especially upload image area, adding validation, and adding warnings before leaving unsaved or deleting.
-- Show live view of event then allow to edit.
-- Of course with any site add favicon and og images and meta tags
 
 ## Screenshots
 
@@ -52,3 +38,12 @@ https://mia-events.netlify.app
 ### Update an event
 
 ![Update an event](https://github.com/shalanah/mia-events/blob/main/screenshots/update.png?raw=true)
+
+## Areas of future improvement
+
+- Browser testing / fallbacks - would suggest using Chrome or Firefox. Used a lot of modern CSS (for fun). Especially fallbacks for unsupported `gap` flexbox feature in Safari.
+- Add a db for persistance. All of the data is held in your session for now.
+- More mobile / responsive adjustments
+- Tweaks to form especially upload image area, adding validation, and adding warnings before leaving unsaved or deleting.
+- Show live view of event then allow to edit.
+- Of course with any site add favicon and og images and meta tags
