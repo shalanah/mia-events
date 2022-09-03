@@ -11,10 +11,6 @@ Write a reusable function to organize the objects from newest to oldest within F
 - Upcoming Events: any date more than 30 days out
 - Past Events: 1 day older or more
 
-## Demo
-
-https://mia-events.netlify.app
-
 ## Capabilities
 
 - Add events
